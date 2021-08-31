@@ -10,6 +10,9 @@ const log = require('./logger');
 
 const app = express();
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -53,7 +56,7 @@ function validateGenre(genre) {
 }
 
 app.get('/', (req, res) => {
-    res.send("Hello");
+    res.render('index', { title: 'Express demo', message: 'Hello' });
 });
 
 app.get('/api/courses', (req, res) => {
