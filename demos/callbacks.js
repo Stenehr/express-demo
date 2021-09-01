@@ -1,4 +1,4 @@
-// CALLBACKS
+
 console.log('Before');
 getUser(1, getRepositories);
 console.log('After')
