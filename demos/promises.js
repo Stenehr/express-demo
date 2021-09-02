@@ -11,14 +11,25 @@
 // .catch((err) => console.log('Error: ', err));
 
 // Callbacks to Promises
-console.log('Before');
-getUser(1)
-    .then(user => getRepos(user))
-    .then(repos => displayRepos(repos))
-    .catch(err => console.log(err));
-console.log('After')
+// console.log('Before');
+// getUser(1)
+//     .then(user => getRepos(user))
+//     .then(repos => displayRepos(repos))
+//     .catch(err => console.log(err));
+// console.log('After')
 
-function displayRepos(repos) {
+// Async/await
+
+
+try {
+    displayRepos();
+} catch (ex) {
+    console.log(ex);
+}
+
+async function displayRepos() {
+    const user = await getUser(1);
+    const repos = await getRepos(user);
     console.log(repos);
 }
 
@@ -37,7 +48,28 @@ function getRepos(username) {
         setTimeout(() => {
             const repos = ['repo1', 'repo2', 'repo3']
             reject(new Error('test'));
-            // resolve(repos);
+            resolve(repos);
         }, 2000)
     })
 }
+
+// Promise all
+const p1 = new Promise((resolve) => {
+    setTimeout(() => {
+        console.log("running method one...");
+        resolve("method one");
+    }, 2000);
+});
+
+const p2 = new Promise((resolve) => {
+    setTimeout(() => {
+        console.log("running method two...");
+        resolve("method two");
+    }, 2200)
+});
+
+// Promise.all([ p1, p2 ])
+//     .then(result => console.log(result));
+
+// Promise.race([p1, p2])
+//     .then(result => console.log(result));
