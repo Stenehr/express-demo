@@ -19,7 +19,7 @@ const Course = mongoose.model('Course', courseSchema);
 async function createCourse() {
     const course = new Course({
         name: 'Test Course',
-        author: 'Tim',
+        author: 'Bill',
         tags: ['test', 'backend'],
         price: 25,
         isPublished: false
@@ -43,12 +43,20 @@ async function getCourses() {
         // .find({
         //     price: { $gte: 10, $lt: 20 }
         // })
-        .find()
+        // .find({
+        //     author: /^b/i
+        // })
+        // .find({
+        //     author: /m$/i
+        // })
+        .find({
+            author: /.*il.*/
+        })
         // .or([ { price: 10 }, { isPublished: true } ])
-        .and([ { price: 10 }, { isPublished: true } ])
+        // .and([ { price: 10 }, { isPublished: true } ])
         .limit(10)
         .sort({ name: 1 })
-        .select( { name: 1, price: 1, isPublished: 1 });
+        .select( { name: 1, author: 1, price: 1, isPublished: 1 });
     console.log(courses);
 }
 
