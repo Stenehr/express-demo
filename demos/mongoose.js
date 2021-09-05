@@ -10,7 +10,8 @@ const courseSchema = new mongoose.Schema({
     author: String,
     tags: [ String ],
     date: { type: Date, default: Date.now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: Number
 });
 
 const Course = mongoose.model('Course', courseSchema);
@@ -20,6 +21,7 @@ async function createCourse() {
         name: 'Test Course',
         author: 'Tim',
         tags: ['test', 'backend'],
+        price: 20,
         isPublished: true
     });
 
@@ -31,13 +33,19 @@ async function createCourse() {
 
 async function getCourses() {
     const courses = await Course
+        // .find({
+        //     author: 'Tim',
+        //     isPublished: true
+        // })
+        // .find({
+        //     tags: { $in: ['test'] }
+        // })
         .find({
-            author: 'Tim',
-            isPublished: true
+            price: { $gte: 10, $lt: 20 }
         })
         .limit(10)
         .sort({ name: 1 })
-        .select( { name: 1, tags: 1 });
+        .select( { name: 1, tags: 1, price: 1 });
     console.log(courses);
 }
 
