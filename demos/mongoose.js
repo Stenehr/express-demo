@@ -75,4 +75,28 @@ async function updateCourse(id) {
     console.log(result);
 }
 
-updateCourse('6134bf045a5791af513f0173');
+async function updateFirst(id) {
+    // const result = await Course.updateOne({ _id: id }, {
+    //     $set: {
+    //         author: 'Bill changed'
+    //     }
+    // });
+    // console.log(result);
+
+    const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'Bill changed second'
+        }
+    }, { new: true });
+    console.log(course);
+}
+
+// updateFirst('6134bf045a5791af513f0173');
+
+async function removeCourse(id) {
+    const result = await Course.deleteOne({ _id: id });
+    // const course = await Course.findByIdAndRemove(id);
+    console.log(result);
+}
+
+removeCourse('6134bf045a5791af513f0173');
