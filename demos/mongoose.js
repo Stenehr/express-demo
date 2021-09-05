@@ -21,8 +21,8 @@ async function createCourse() {
         name: 'Test Course',
         author: 'Tim',
         tags: ['test', 'backend'],
-        price: 20,
-        isPublished: true
+        price: 25,
+        isPublished: false
     });
 
     const result = await course.save();
@@ -40,12 +40,15 @@ async function getCourses() {
         // .find({
         //     tags: { $in: ['test'] }
         // })
-        .find({
-            price: { $gte: 10, $lt: 20 }
-        })
+        // .find({
+        //     price: { $gte: 10, $lt: 20 }
+        // })
+        .find()
+        // .or([ { price: 10 }, { isPublished: true } ])
+        .and([ { price: 10 }, { isPublished: true } ])
         .limit(10)
         .sort({ name: 1 })
-        .select( { name: 1, tags: 1, price: 1 });
+        .select( { name: 1, price: 1, isPublished: 1 });
     console.log(courses);
 }
 
