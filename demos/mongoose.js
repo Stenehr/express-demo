@@ -55,9 +55,24 @@ async function getCourses() {
         // .or([ { price: 10 }, { isPublished: true } ])
         // .and([ { price: 10 }, { isPublished: true } ])
         .limit(10)
+        // .skip(1)
         .sort({ name: 1 })
-        .select( { name: 1, author: 1, price: 1, isPublished: 1 });
+        .select( { name: 1, author: 1, price: 1, isPublished: 1 })
+        // .count();
     console.log(courses);
 }
 
-getCourses();
+// getCourses();
+
+async function updateCourse(id) {
+    const course = await Course.findById(id);
+    course.set({
+        author: 'Someone else',
+        tags: [ ...course.tags, 'Added tag' ]
+    });
+
+    const result = await course.save();
+    console.log(result);
+}
+
+updateCourse('6134bf045a5791af513f0173');
